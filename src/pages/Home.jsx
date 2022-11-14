@@ -10,20 +10,22 @@ export const Home = () => {
     useEffect(() => {
         getPokemons();
     }, []);
+
     const getPokemons = () => {
-        axios
-        .get("https://pokeapi.co/api/v2/pokemon?limit=100")
-        .then((res) => setPokemons(res.data.results))
-        .catch((err) => console.log(err));
+        var endpoints = [];
+        for(var i = 1; i < 100; i++){
+            endpoints.push(`https://pokeapi.co/api/v2/pokemon/${i}/`);
+        }
+        var response = axios.all(endpoints.map((endpoint) => axios.get(endpoint))).then((res) => setPokemons(res));
     };
   return (
     <div>
       <Navbar />
       <Container maxWidth="false">
         <Grid container>
-            {pokemons.map((pokemon) =>(
-                <Grid item xs={3}>
-                    <PokemonCard />
+            {pokemons.map((pokemon, key) => (
+                <Grid item xs={2} key={key}>
+                    <PokemonCard name={pokemon.data.name} image={pokemon.data.sprites.front_default}/>
                 </Grid>
             ))}           
         </Grid>
