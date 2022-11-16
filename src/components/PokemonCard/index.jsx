@@ -11,7 +11,7 @@ export default function PokemonCard({name, image}) {
       <CardActionArea>
         <CardMedia
           component="img"
-          height="250"
+          height="230"
           image={image}
           alt="green iguana"
         />
